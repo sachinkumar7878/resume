@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Capture Photo</title>
+</head>
+<body>
+  <h2>Capture Photo from Camera</h2>
+  <video id="video" width="300" height="200" autoplay></video>
+  <button id="capture">Capture</button>
+  <canvas id="canvas" width="300" height="200"></canvas>
+  
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureButton = document.getElementById('capture');
+    const ctx = canvas.getContext('2d');
+
+    // Request camera access
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(error => {
+        alert("Camera access denied: " + error);
+      });
+
+    // Capture photo
+    captureButton.addEventListener('click', () => {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    });
+  </script>
+</body>
+</html>
